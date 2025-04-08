@@ -2,12 +2,13 @@ package neoflex.app.neoflextestapp.service;
 
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 @Service
 public class VacationCalculatorService {
     private final HolidaysService holidaysService;
-    private double averageWorkingDaysPerMonth = 29.3;
+    private final double AVERAGE_WORKING_DAYS_PER_MONTH = 29.3;
 
     public VacationCalculatorService(HolidaysService holidaysService) {
         this.holidaysService = holidaysService;
@@ -22,7 +23,7 @@ public class VacationCalculatorService {
      * @return Сумма отпускных
      */
     public double calculateBasic(double averageSalary, int vacationDays) {
-        return (averageSalary / averageWorkingDaysPerMonth) * vacationDays;
+        return (averageSalary / AVERAGE_WORKING_DAYS_PER_MONTH) * vacationDays;
     }
 
     /**
@@ -45,7 +46,7 @@ public class VacationCalculatorService {
                 workingDays++;
             }
         }
-        return (averageSalary / averageWorkingDaysPerMonth) * workingDays;
+        return (averageSalary / AVERAGE_WORKING_DAYS_PER_MONTH) * workingDays;
     }
 
     /**
@@ -55,7 +56,7 @@ public class VacationCalculatorService {
      * @return true, если день рабочий; false в противном случае
      */
     private boolean isWorkingDay(LocalDate date) {
-        if (date.getDayOfWeek().getValue() >= 6) {
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
             return false;
         }
 

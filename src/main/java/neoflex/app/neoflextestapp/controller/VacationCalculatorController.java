@@ -11,8 +11,12 @@ import java.time.format.DateTimeParseException;
 @RestController
 public class VacationCalculatorController {
 
-    @Autowired
-    private VacationCalculatorService vacationCalculatorService;
+    private final VacationCalculatorService vacationCalculatorService;
+
+    public VacationCalculatorController(VacationCalculatorService vacationCalculatorService) {
+        this.vacationCalculatorService = vacationCalculatorService;
+    }
+
 
     @GetMapping("/calculate")
     public double calculateVacationPay(
